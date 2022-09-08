@@ -1,50 +1,21 @@
-import React, { useEffect, useState } from "react"
-import { Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native"
+import React from "react"
+import { Text, StyleSheet, TouchableOpacity, FlatList, View } from "react-native"
 import redes from "./redes.json"
 
 export const TelaPrincipal = ({ navigation }) => {
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Info", { rede: redes.filter(rede => rede.id === item.id)[0] })}
+      style={styles.option}
+    >
+      <Text style={styles.textOption}>{item.service}</Text>
+    </TouchableOpacity>
+  )
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.titulo}>Fiap Pass</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Info", { rede: redes.filter(rede => rede.id === 1)[0] })}
-        style={styles.option}
-      >
-        <Text style={styles.textOption}>Facebook</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Info", { rede: redes.filter(rede => rede.id === 2)[0] })}
-        style={styles.option}
-      >
-        <Text style={styles.textOption}>Instagram</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Info", { rede: redes.filter(rede => rede.id === 3)[0] })}
-        style={styles.option}
-      >
-        <Text style={styles.textOption}>Youtube</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Info", { rede: redes.filter(rede => rede.id === 4)[0] })}
-        style={styles.option}
-      >
-        <Text style={styles.textOption}>Stack Overflow</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Info", { rede: redes.filter(rede => rede.id === 5)[0] })}
-        style={styles.option}
-      >
-        <Text style={styles.textOption}>Gmail</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Info", { rede: redes.filter(rede => rede.id === 6)[0] })}
-        style={styles.option}
-      >
-        <Text style={styles.textOption}>Outlook</Text>
-      </TouchableOpacity>
-    </ScrollView>
+      <FlatList data={redes} renderItem={renderItem} />
+    </View>
   )
 }
 
@@ -67,7 +38,6 @@ const styles = StyleSheet.create({
   },
   option: {
     backgroundColor: "#ebeaea",
-    width: "100%",
     paddingHorizontal: 8,
     paddingVertical: 16,
     borderRadius: 12,
